@@ -3,7 +3,7 @@ Codesigning Scripts for Zcash Foundation releases
 
 ## Quickstart
 ```
-# Install pre-requsits
+# Install pre-requisites
 brew install  gsha256sum gnupg      # MacOS
 sudo apt install sha256sum gnupg    # Linux
 

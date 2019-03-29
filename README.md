@@ -3,8 +3,13 @@ Codesigning Scripts for Zcash Foundation releases
 
 ## Quickstart
 ```
+# Install pre-requsits
+brew install  gsha256sum gnupg      # MacOS
+sudo apt install sha256sum gnupg    # Linux
+
 # Generate a full key
 gpg --full-generate-key
+
 # Sign your release binaries
 ./codesign.sh file1.msi file2.deb file3.dmg
 # Will produce signatures.zip with the hashes and signatures

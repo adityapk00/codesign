@@ -1,6 +1,17 @@
 # Codesign
 Codesigning Scripts for Zcash Foundation releases
 
+## Quickstart
+```
+# Generate a full key
+gpg --full-generate-key
+# Sign your release binaries
+./codesign.sh file1.msi file2.deb file3.dmg
+# Will produce signatures.zip with the hashes and signatures
+```
+
+# Documentation
+
 ## Create a gpg private key on your release machine
 First, create a GPG private key on the machine you plan to use to sign the release binaries. This is usually your build/CI machine. 
 Create the keys by running
@@ -10,9 +21,8 @@ gpg --full-generate-key
 The defaults for the crypto parameters are usually sufficient
 
 ### NOTE on using a passphrase
-```
 If you specify a passphrase for the key, you'll have to enter it interactively when running the script. If you're planning to do the signing as a part of your build process, you might want to not specify a passphrase for the key
-```
+
 
 ## Backup your key
 You can backup your private key with 
@@ -53,12 +63,12 @@ The lines begining with `sig!` and `sig!3` show the fingerprint, in this case `0
 # Signing your releases
 To sign your release binaries, run 
 ```
-./codesign.sh --version VERSION_IDENTIFIER file1 [file2 ...]
+./codesign.sh file1 [file2 ...]
 ```
 
-This will create a single file, `signatures-vVERSION_IDENTIFIER.zip` which will contain the sha256 hashes of all the binaries files and a signature for each of the input files. For example:
+This will create a single file, `signatures.zip` which will contain the sha256 hashes of all the binaries files and a signature for each of the input files. For example:
 ```
-./codesign.sh --version 1.3 zecwallet-Windows-Installer.msi zecwallet-Linux.deb zecwallet-MacOS.dmg
+./codesign.sh zecwallet-Windows-Installer.msi zecwallet-Linux.deb zecwallet-MacOS.dmg
 ```
 
 # Verifying signatures
@@ -89,7 +99,7 @@ gpg: Good signature from "adityapk00 (PGP Key for zec-qt-wallet) <zcash@adityapk
 
 ### Checksums
 
-The file `sha256sum-vVERSION.txt` contains the SHA256 checksums for each download. You can verify that the file you downloaded matches this checksum via the following command:
+The file `sha256sum.txt` contains the SHA256 checksums for each download. You can verify that the file you downloaded matches this checksum via the following command:
 
 ```
 sha256sum macOS-zecwallet-v0.6.2.dmg

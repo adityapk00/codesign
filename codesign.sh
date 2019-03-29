@@ -13,7 +13,7 @@ do_help() {
     echo "Usage:"
     echo "Signing binaries:"
     echo "  Codesign a list of files"
-    echo "  ${bold}codesign.sh --version [version_id] file [file ...]${normal}"; 
+    echo "  ${bold}codesign.sh file [file ...]${normal}"; 
     echo ""
     echo "Export Public Key:"
     echo "  Export the public key of the signing key"
@@ -24,16 +24,6 @@ do_help() {
     echo "  Upload the public key to public keyservers, so users can discover them."
     echo "  ${bold}codesign.sh --upload${normal} --key KEY_FINGERPRINT"
     exit 1; 
-}
-
-# Print the usage for the version parameter and exit
-do_version_missing() {
-    echo "No release version identifier specified";
-    echo "Please specify a release version with ${bold}--version${normal}"
-    echo
-    echo "Example:"
-    echo "./codesign.sh --version 1.4 filename.msi"
-    exit 1;
 }
 
 # Print the instructions for how to install dependencies
@@ -123,11 +113,6 @@ do
         -h|--help)
             do_help
         ;;
-        -v|--version)
-            APP_VERSION="$2"
-            shift # past argument
-            shift # past value
-        ;;
         -p|--public)
             do_export_public_key
         ;;
@@ -147,11 +132,6 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 # Check for argument list, to make sure there are some files specified
 if [ $# -eq 0 ]; then
     do_missing_arguments
-fi
-
-# Check to see if app version is specified
-if [ -z $APP_VERSION ]; then
-    do_version_missing
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -198,7 +178,7 @@ do
 done
 
 # Zip up everything into a neat package
-ZipName=signatures-v$APP_VERSION.zip
+ZipName=signatures.zip
 echo "Zipping files into $ZipName"
 rm -f $ZipName
 zip $ZipName ${PackageContents[@]} 2>&1 >/dev/null

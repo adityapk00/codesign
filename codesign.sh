@@ -103,12 +103,14 @@ do_upload_public_key() {
     echo
 
     gpg --keyserver certserver.pgp.com --send-key $KEY_FINGERPRINT 
-    gpg --keyserver certserver.pgp.com --send-key $KEY_FINGERPRINT 
     gpg --keyserver pgp.mit.edu --send-key $KEY_FINGERPRINT 
     gpg --keyserver keyserver.ubuntu.com --send-key $KEY_FINGERPRINT 
     gpg --keyserver pool.sks-keyservers.net --send-key $KEY_FINGERPRINT 
     gpg --keyserver pgp.key-server.io --send-key $KEY_FINGERPRINT 
     gpg --keyserver keys.gnupg.net --send-key $KEY_FINGERPRINT 
+
+    echo "All Done"
+    exit 1;
 }
 
 # Accept the variables as command line arguments as well
